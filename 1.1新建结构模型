@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+class StructureModel:
+    def __init__(self):
+        self.fig = plt.figure()  # 创建一个新的图形窗口
+        self.ax = self.fig.add_subplot(111, projection='3d')  # 添加一个三维子图
+        self.ax.set_xlabel('X')  # 设置X轴标签
+        self.ax.set_ylabel('Y')  # 设置Y轴标签
+        self.ax.set_zlabel('Z')  # 设置Z轴标签
+        self.ax.set_title('Blank Structure Model')  # 设置图形标题
+
+    def show_model(self):
+        plt.show()  # 显示模型
+
+def create_blank_model():
+    model = StructureModel()  # 创建一个结构模型对象
+    model.show_model()  # 显示结构模型
+
+if __name__ == "__main__":
+    create_blank_model()
