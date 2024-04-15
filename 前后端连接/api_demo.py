@@ -28,7 +28,7 @@ materials = {
 # 登录接口
 @app.route('/login', methods=['POST'])
 def login():
-        username = request.form.get('username')
+    username = request.form.get('username')
     password = request.form.get('password')
     if username and password:
         if username in users and users[username]['password'] == password:
