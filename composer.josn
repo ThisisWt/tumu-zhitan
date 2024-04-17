@@ -1,0 +1,15 @@
+{
+    "name": "your/project-name",
+    "description": "Description of your project",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2" // 定义 PHP 版本依赖
+        // 添加其他依赖
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
