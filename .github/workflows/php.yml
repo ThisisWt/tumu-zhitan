@@ -19,10 +19,14 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2.18'
+          php-version: '8.2'
 
       - name: Install Composer dependencies
-        run: composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+        run: |
+          cd path/to/your/project
+          composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
 
       - name: Run PHPUnit tests
-        run: vendor/bin/phpunit
+        run: |
+          cd path/to/your/project
+          vendor/bin/phpunit
