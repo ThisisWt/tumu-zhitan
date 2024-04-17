@@ -1,85 +1,96 @@
-/* Reset default margin and padding */
+/* Reset default margin and padding for body and html */
 body, html {
-    margin: 0;
-    padding: 0;
+    margin: 0;               /* 移除默认的外边距 */
+    padding: 0;              /* 移除默认的内边距 */
     font-family: Arial, SimSun, sans-serif; /* 设置页面默认字体 */
 }
 
 /* Style the main container */
 #main {
-    width: 80%; /* 设置主内容区域宽度 */
-    max-width: 400px; /* 设置最大宽度 */
-    margin: 50px auto; /* 居中显示 */
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;              /* 设置主内容区域宽度为父元素宽度的80% */
+    max-width: 400px;        /* 设置最大宽度为400px，防止内容过宽 */
+    margin: 50px auto;       /* 居中显示，上下外边距为50px，左右自动调整 */
+    padding: 30px;           /* 内边距为30px，增加内容与边框的距离 */
+    background-color: #f9f9f9; /* 设置背景颜色为浅灰色 */
+    border-radius: 8px;      /* 设置圆角边框 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
 }
 
 /* Style the heading */
 h1 {
-    text-align: center;
-    color: #333;
+    text-align: center;      /* 居中显示标题 */
+    color: #333;             /* 设置标题颜色为深灰色 */
 }
 
 /* Style the title */
 .title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #666;
+    text-align: center;      /* 居中显示文本 */
+    margin-bottom: 20px;     /* 底部外边距为20px */
+    font-size: 18px;         /* 设置字体大小为18px */
+    color: #666;             /* 设置文本颜色为深灰色 */
 }
 
 /* Style form inputs */
 input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    width: 100%;             /* 输入框宽度占满父元素宽度 */
+    padding: 10px;           /* 内边距为10px */
+    margin-bottom: 15px;     /* 底部外边距为15px */
+    border: 1px solid #ccc;  /* 设置边框为1px实线灰色 */
+    border-radius: 4px;      /* 设置圆角边框 */
+    box-sizing: border-box;  /* 将内边距和边框计入宽度 */
 }
 
 /* Style form submit and reset buttons */
 input[type="submit"], input[type="reset"] {  
-    width: 49%; /* 平分按钮区域 */  
-    height: 30px; /* 直接设置按钮的高度 */  
-    padding: 0 10px; /* 移除上下方向的padding，左右方向的padding保持10px */  
-    line-height: 30px; /* 设置行高与高度相同以确保文本垂直居中 */  
-    border: none;  
-    border-radius: 4px;  
-    cursor: pointer;  
-    background-color: #007bff; /* 蓝色按钮 */  
-    color: white;  
-    font-size: 16px;  
-    box-sizing: border-box; /* 确保padding和border不会增加元素的总宽度和高度 */  
+    width: 49%;              /* 设置按钮宽度为父元素宽度的49% */
+    height: 30px;            /* 设置按钮高度为30px */
+    padding: 0 10px;         /* 左右内边距为0，上下内边距为10px */
+    line-height: 30px;       /* 行高与高度相同，使文本垂直居中 */
+    border: none;            /* 移除按钮边框 */
+    border-radius: 4px;      /* 设置圆角边框 */
+    cursor: pointer;         /* 设置鼠标样式为手型 */
+    background-color: #007bff; /* 设置背景颜色为蓝色 */
+    color: white;            /* 设置文本颜色为白色 */
+    font-size: 16px;         /* 设置字体大小为16px */
+    box-sizing: border-box;  /* 将内边距和边框计入宽度 */
 }
 
+/* Hover effect for submit and reset buttons */
 input[type="submit"]:hover, input[type="reset"]:hover {
-    background-color: #45a049; /* 鼠标悬停时深绿色 */
+    background-color: #45a049; /* 鼠标悬停时背景颜色变为深绿色 */
 }
 
-/* Style the registration link */
-a {
-    display: block;
-    text-align: right;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #666;
-    text-decoration: none;
+/* Style for links container */
+.links-container {
+    display: flex;             /* 使用 Flexbox 布局 */
+    justify-content: flex-end; /* 将子元素靠右对齐 */
+    align-items: center;       /* 垂直居中对齐子元素 */
+    margin-top: 10px;          /* 顶部外边距为10px */
 }
 
-a:hover {
-    text-decoration: underline;
+/* Style for links inside container */
+.links-container a {
+    display: inline-block;     /* 将链接显示为内联块级元素，使其水平排列 */
+    margin-right: 10px;        /* 右边距为10px，增加链接之间的间隔 */
+    font-size: 14px;           /* 字体大小为14px */
+    color: #666;                /* 字体颜色为深灰色 */
+    text-decoration: none;     /* 去除下划线 */
 }
+
+/* Hover effect for links inside container */
+.links-container a:hover {
+    text-decoration: underline; /* 鼠标悬停时添加下划线效果 */
+}
+
+/* Style for floating image */
 img.floatleft { 
-    float: left; 
-    margin: 5px; 
-
+    float: left;              /* 图片浮动在左侧 */
+    margin: 5px;              /* 设置外边距为5px */
 }
-body
-{
-background-image: url("background.jpg");
-background-size: cover; /* 设置背景满铺 */
-background-attachment: fixed;
+
+/* Background styling for body */
+body {
+    background-image: url("background.jpg"); /* 设置背景图片 */
+    background-size: cover;    /* 设置背景图片铺满整个页面 */
+    background-attachment: fixed; /* 设置背景图片固定不随页面滚动 */
 }
