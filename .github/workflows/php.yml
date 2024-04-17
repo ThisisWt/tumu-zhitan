@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+          composer install --prefer-dist --no-progress
         working-directory: ${{ github.workspace }}
 
       - name: Run PHPUnit tests
