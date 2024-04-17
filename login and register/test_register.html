@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <!--指定字符集-->
+    <meta charset="UTF-8">
+    <!--定义视口，确保页面在不同设备上现实正常-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--定义网站关键词-->
+    <meta name="keywords" content="土木工程，土木智探，结构分析">
+    <!--网站描述-->
+    <meta name="description" content="一款用于结构分析的软件的登录与注册界面">
+    <!--定义作者-->
+    <meta name="author" content="软工第四小组">
+    <title>注册界面</title>
+    <link rel="stylesheet" href="styles_register.css">
+</head>
+<body>
+    <img src="https://civileng.tongji.edu.cn/_upload/tpl/03/ba/954/template954/images/logo.png">
+    <h1 style="font-family:arial,simsun !important">土木智探结构分析注册界面</h1>
+    <div id="main">
+        <div class="title">您还未拥有账号，请注册</div>
+        <form action="test_register.php" method="post" onsubmit="return enter()">
+            <input type="text" name="username" placeholder="用户名"><br>
+            <input type="text" name="password" placeholder="密码"><br>
+            <input type="submit" value="注册">
+            <input type="reset" value="重写">
+            <a href="test_login.html" target="_self"  style="font-family:arial,simsun !important;position: relative; bottom: 0%; right: 5px;">已有账号，请登录</a>
+        </form>
+    </div>
+</body>
+</html>
