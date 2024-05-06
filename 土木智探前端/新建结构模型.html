@@ -10,6 +10,44 @@
 <body>
     <img src="同济大学背景题头.png" style="width: 100%; object-position: center;">
     <h1>新建结构模型</h1>
+    <form id="modelForm">
+        <label for="action">选择操作:</label>
+        <select id="action" name="action">
+            <option value="矩形梁">矩形梁</option>
+            <option value="圆柱体">圆柱体</option>
+            <option value="球体">球体</option>
+            <option value="导入DXF">导入DXF</option>
+            <option value="分析DXF">分析DXF</option>
+            <option value="修改DXF">修改DXF</option>
+            <option value="可视化DXF">可视化DXF</option>
+            <option value="导出DXF">导出DXF</option>
+        </select>
+        <br>
+        <label for="dimensions">尺寸或文件路径（用逗号分隔）:</label>
+        <input type="text" id="dimensions" name="dimensions">
+        <br>
+        <input type="submit" value="执行操作">
+    </form>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('modelForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').innerText = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
     <img src="同济大学背景题头.png" style="width: 100%; object-position: center;">
 </body>
 
