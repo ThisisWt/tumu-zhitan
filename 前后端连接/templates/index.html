@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结构模型与DXF文件处理</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <img src="同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <h1>结构模型与DXF文件处理</h1>
+    <form id="actionForm">
+        <label for="dimensions">请输入尺寸（用逗号分隔）或操作DXF文件:</label><br>
+        <input type="text" id="dimensions" name="dimensions"><br>
+        <select name="action" id="action">
+            <option value="矩形梁">矩形梁</option>
+            <option value="圆柱体">圆柱体</option>
+            <option value="球体">球体</option>
+            <option value="导入DXF">导入DXF</option>
+            <option value="分析DXF">分析DXF</option>
+            <option value="修改DXF">修改DXF</option>
+            <option value="可视化DXF">可视化DXF</option>
+            <option value="导出DXF">导出DXF</option>
+        </select><br>
+        <button type="button" onclick="executeAction()">执行操作</button>
+    </form>
+    <div id="result"></div>
+
+    <!-- 三维模型容器 -->
+    <div id="3dModelContainer" style="display: none;">
+        <canvas id="3dCanvas" width="500" height="500"></canvas>
+    </div>
+
+    <script>
+        function executeAction() {
+            var action = document.getElementById('action').value;
+            var dimensions = document.getElementById('dimensions').value;
+            axios.post('/', {
+                action: action,
+                dimensions: dimensions
+            })
+            .then(function (response) {
+                var result = response.data.result;
+                var error = response.data.error;
+                if (result) {
+                    document.getElementById('result').innerHTML = result;
+                    // 根据操作类型显示对应的三维模型
+                    if (action === '矩形梁' || action === '圆柱体' || action === '球体') {
+                        document.getElementById('3dModelContainer').style.display = 'block';
+                        draw3DModel(action, dimensions);
+                    } else {
+                        document.getElementById('3dModelContainer').style.display = 'none';
+                    }
+                } else if (error) {
+                    console.error(error);
+                } else {
+                    console.error('Unknown error occurred.');
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        }
+
+        // 绘制三维模型
+        function draw3DModel(action, dimensions) {
+            var canvas = document.getElementById('3dCanvas');
+            var context = canvas.getContext('2d');
+            // 清空画布
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            // 在此处编写绘制三维模型的代码
+            // 根据 action 和 dimensions 参数绘制相应的模型
+            // 例如，可以使用 Three.js 或其他 JavaScript 3D 绘图库来实现
+        }
+    </script>
+</body>
+</html>
