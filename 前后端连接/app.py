@@ -1,6 +1,4 @@
-from flask import Flask, request, jsonify
-from flask import Flask, render_template
-from flask import send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import tkinter as tk
 from tkinter import filedialog
 import ezdxf
@@ -17,20 +15,26 @@ class StructuralModelingApp:
 
     def process_action(self, action, dimensions):
         try:
+            print("Action:", action)
+            print("Dimensions:", dimensions)
             if action == '矩形梁' and len(dimensions) == 3:
-                return self.plot_beam(*map(float, dimensions))
+                self.plot_beam(*map(float, dimensions))
+                return "矩形梁绘制完成"
             elif action == '圆柱体' and len(dimensions) == 2:
-                return self.plot_cylinder(*map(float, dimensions))
+                self.plot_cylinder(*map(float, dimensions))
+                return "圆柱体绘制完成"
             elif action == '球体' and len(dimensions) == 1:
-                return self.plot_sphere(float(dimensions[0]))
+                self.plot_sphere(float(dimensions[0]))
+                return "球体绘制完成"
             elif action.startswith('导入') and action.endswith('DXF'):
                 return self.import_dxf()
             elif self.filename and action.endswith('DXF'):
                 return getattr(self, action.lower().replace(' ', '_'))()
             else:
-                return None
-        except ValueError:
-            return None
+                return "无法处理的操作"
+        except ValueError as e:
+            print("Error:", e)
+            return "参数错误，请检查输入值"
 
     def plot_beam(self, length, width, height):
         fig = plt.figure()
@@ -75,7 +79,7 @@ class StructuralModelingApp:
         else:
             return "未选择任何文件"
 
-    def 分析dxf(self):
+    def analyze_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         entity_types = {}
@@ -87,7 +91,7 @@ class StructuralModelingApp:
             result += f"{entity_type}: {count}\n"
         return result
 
-    def 修改dxf(self):
+    def modify_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         for entity in msp.query('LINE'):
@@ -95,7 +99,7 @@ class StructuralModelingApp:
         doc.saveas('modified_dxf.dxf')
         return "修改已保存到 'modified_dxf.dxf'"
 
-    def 可视化dxf(self):
+    def visualize_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         fig = plt.figure()
@@ -109,7 +113,7 @@ class StructuralModelingApp:
         ax.set_zlabel('Z')
         plt.show()
 
-    def 导出dxf(self):
+    def export_dxf(self):
         doc = ezdxf.readfile(self.filename)
         doc.saveas('exported_dxf.dxf')
         return "文件已导出为 'exported_dxf.dxf'"
@@ -117,16 +121,12 @@ class StructuralModelingApp:
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    print(request.method)
-    print(request.json)
-    print(request.args)
-    if request.method == 'POST':
-        data = request.json
-        action = data.get('action')
-        dimensions = data.get('dimensions')
-    elif request.method == 'GET':
-        action = request.args.get('action')
-        dimensions = request.args.get('dimensions')
+    if request.method == 'GET':
+        return render_template('index.html')
+
+    data = request.json
+    action = data.get('action')
+    dimensions = data.get('dimensions')
 
     if action and dimensions:
         app_instance = StructuralModelingApp()
@@ -138,8 +138,6 @@ def index():
             return jsonify({'error': 'Failed to process request.'}), 500
     else:
         return jsonify({'error': 'Action and dimensions are required.'}), 400
-
-    return render_template('index.html')
 
 
 @app.route('/favicon.ico')
