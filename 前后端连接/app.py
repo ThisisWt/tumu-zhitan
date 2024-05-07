@@ -5,27 +5,32 @@ import ezdxf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 class StructuralModelingApp:
     def __init__(self):
         self.filename = None
+        self.model_name = None
 
     def process_action(self, action, dimensions):
         try:
             print("Action:", action)
             print("Dimensions:", dimensions)
             if action == '矩形梁' and len(dimensions) == 3:
-                self.plot_beam(*map(float, dimensions))
-                return "矩形梁绘制完成"
+                self.model_name = 'beam'
+                return self.plot_beam(*map(float, dimensions))
             elif action == '圆柱体' and len(dimensions) == 2:
-                self.plot_cylinder(*map(float, dimensions))
-                return "圆柱体绘制完成"
+                self.model_name = 'cylinder'
+                return self.plot_cylinder(*map(float, dimensions))
             elif action == '球体' and len(dimensions) == 1:
-                self.plot_sphere(float(dimensions[0]))
-                return "球体绘制完成"
+                self.model_name = 'sphere'
+                return self.plot_sphere(float(dimensions[0]))
             elif action.startswith('导入') and action.endswith('DXF'):
                 return self.import_dxf()
             elif self.filename and action.endswith('DXF'):
@@ -45,7 +50,8 @@ class StructuralModelingApp:
         ax.set_xlabel('Length')
         ax.set_ylabel('Width')
         ax.set_zlabel('Height')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "矩形梁绘制完成"
 
     def plot_cylinder(self, radius, height):
         fig = plt.figure()
@@ -58,7 +64,8 @@ class StructuralModelingApp:
         ax.plot_surface(x_grid, y_grid, z_grid, color='red')
         ax.set_xlabel('Radius')
         ax.set_ylabel('Height')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "圆柱体绘制完成"
 
     def plot_sphere(self, radius):
         fig = plt.figure()
@@ -70,7 +77,8 @@ class StructuralModelingApp:
         z = radius * np.outer(np.ones(np.size(u)), np.cos(v))
         ax.plot_surface(x, y, z, color='green')
         ax.set_xlabel('Radius')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "球体绘制完成"
 
     def import_dxf(self):
         self.filename = filedialog.askopenfilename(title="选择DXF模型文件", filetypes=[("DXF files", "*.dxf")])
@@ -111,7 +119,8 @@ class StructuralModelingApp:
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], 'dxf_visualization.png'))
+        return "DXF文件可视化完成"
 
     def export_dxf(self):
         doc = ezdxf.readfile(self.filename)
@@ -138,6 +147,11 @@ def index():
             return jsonify({'error': 'Failed to process request.'}), 500
     else:
         return jsonify({'error': 'Action and dimensions are required.'}), 400
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/favicon.ico')
