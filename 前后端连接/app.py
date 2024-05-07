@@ -114,11 +114,18 @@ class StructuralModelingApp:
         return "文件已导出为 'exported_dxf.dxf'"
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    data = request.json
-    action = data.get('action')
-    dimensions = data.get('dimensions')
+    print(request.method)
+    print(request.json)
+    print(request.args)
+    if request.method == 'POST':
+        data = request.json
+        action = data.get('action')
+        dimensions = data.get('dimensions')
+    elif request.method == 'GET':
+        action = request.args.get('action')
+        dimensions = request.args.get('dimensions')
 
     if action and dimensions:
         app_instance = StructuralModelingApp()
@@ -130,7 +137,14 @@ def index():
             return jsonify({'error': 'Failed to process request.'}), 500
     else:
         return jsonify({'error': 'Action and dimensions are required.'}), 400
+
     return render_template('index.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.root_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
