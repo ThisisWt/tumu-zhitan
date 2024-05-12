@@ -1,36 +1,45 @@
-from flask import Flask, request, jsonify
-from flask import Flask, render_template
-from flask import send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import tkinter as tk
 from tkinter import filedialog
 import ezdxf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 class StructuralModelingApp:
     def __init__(self):
         self.filename = None
+        self.model_name = None
 
     def process_action(self, action, dimensions):
         try:
+            print("Action:", action)
+            print("Dimensions:", dimensions)
             if action == '矩形梁' and len(dimensions) == 3:
+                self.model_name = 'beam'
                 return self.plot_beam(*map(float, dimensions))
             elif action == '圆柱体' and len(dimensions) == 2:
+                self.model_name = 'cylinder'
                 return self.plot_cylinder(*map(float, dimensions))
             elif action == '球体' and len(dimensions) == 1:
+                self.model_name = 'sphere'
                 return self.plot_sphere(float(dimensions[0]))
             elif action.startswith('导入') and action.endswith('DXF'):
                 return self.import_dxf()
             elif self.filename and action.endswith('DXF'):
                 return getattr(self, action.lower().replace(' ', '_'))()
             else:
-                return None
-        except ValueError:
-            return None
+                return "无法处理的操作"
+        except ValueError as e:
+            print("Error:", e)
+            return "参数错误，请检查输入值"
 
     def plot_beam(self, length, width, height):
         fig = plt.figure()
@@ -41,7 +50,8 @@ class StructuralModelingApp:
         ax.set_xlabel('Length')
         ax.set_ylabel('Width')
         ax.set_zlabel('Height')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "矩形梁绘制完成"
 
     def plot_cylinder(self, radius, height):
         fig = plt.figure()
@@ -54,7 +64,8 @@ class StructuralModelingApp:
         ax.plot_surface(x_grid, y_grid, z_grid, color='red')
         ax.set_xlabel('Radius')
         ax.set_ylabel('Height')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "圆柱体绘制完成"
 
     def plot_sphere(self, radius):
         fig = plt.figure()
@@ -66,7 +77,8 @@ class StructuralModelingApp:
         z = radius * np.outer(np.ones(np.size(u)), np.cos(v))
         ax.plot_surface(x, y, z, color='green')
         ax.set_xlabel('Radius')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], f'{self.model_name}.png'))
+        return "球体绘制完成"
 
     def import_dxf(self):
         self.filename = filedialog.askopenfilename(title="选择DXF模型文件", filetypes=[("DXF files", "*.dxf")])
@@ -75,7 +87,7 @@ class StructuralModelingApp:
         else:
             return "未选择任何文件"
 
-    def 分析dxf(self):
+    def analyze_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         entity_types = {}
@@ -87,7 +99,7 @@ class StructuralModelingApp:
             result += f"{entity_type}: {count}\n"
         return result
 
-    def 修改dxf(self):
+    def modify_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         for entity in msp.query('LINE'):
@@ -95,7 +107,7 @@ class StructuralModelingApp:
         doc.saveas('modified_dxf.dxf')
         return "修改已保存到 'modified_dxf.dxf'"
 
-    def 可视化dxf(self):
+    def visualize_dxf(self):
         doc = ezdxf.readfile(self.filename)
         msp = doc.modelspace()
         fig = plt.figure()
@@ -107,9 +119,10 @@ class StructuralModelingApp:
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        plt.show()
+        plt.savefig(os.path.join(app.config['UPLOAD_FOLDER'], 'dxf_visualization.png'))
+        return "DXF文件可视化完成"
 
-    def 导出dxf(self):
+    def export_dxf(self):
         doc = ezdxf.readfile(self.filename)
         doc.saveas('exported_dxf.dxf')
         return "文件已导出为 'exported_dxf.dxf'"
@@ -117,16 +130,12 @@ class StructuralModelingApp:
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    print(request.method)
-    print(request.json)
-    print(request.args)
-    if request.method == 'POST':
-        data = request.json
-        action = data.get('action')
-        dimensions = data.get('dimensions')
-    elif request.method == 'GET':
-        action = request.args.get('action')
-        dimensions = request.args.get('dimensions')
+    if request.method == 'GET':
+        return render_template('index.html')
+
+    data = request.json
+    action = data.get('action')
+    dimensions = data.get('dimensions')
 
     if action and dimensions:
         app_instance = StructuralModelingApp()
@@ -139,7 +148,10 @@ def index():
     else:
         return jsonify({'error': 'Action and dimensions are required.'}), 400
 
-    return render_template('index.html')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/favicon.ico')
