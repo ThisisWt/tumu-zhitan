@@ -1,0 +1,108 @@
+/* 全局样式重置 */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* 头部容器样式 */
+#header-container {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: space-between; /* 左右对齐 */
+    align-items: center; /* 垂直居中 */
+    background-color: #333; /* 设置背景色 */
+    color: #fff; /* 设置文字颜色 */
+    padding: 10px; /* 内边距 */
+}
+
+/* Header */
+#header {
+	height: 50px;
+	position: relative;
+	width: 100%;
+	z-index: -9;
+}
+#header h1 {
+	/*background: url("../img/logo.png") no-repeat scroll 0 0 transparent;*/
+	height: 36px;
+	left: 28px;
+	line-height: 36px;
+	overflow: hidden;
+	position: relative;
+	top: 6px;
+	width: 191px;
+	font-size: 20px;
+	font-weight: bold;
+}
+#header h1 a {
+	display: block;
+	color: #A4D3EE;
+}
+
+
+/* 用户导航栏样式 */
+#user-nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* 提高层级，确保在最顶层 */
+    background-color: #333; /* 设置背景色为深灰色 */
+    padding: 10px; /* 添加内边距 */
+    border-radius: 5px; /* 添加圆角 */
+}
+
+#user-nav ul.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#user-nav ul.nav > li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#user-nav ul.nav > li > a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+#user-nav ul.nav > li > a:hover {
+    background-color: #555;
+}
+
+#user-nav .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+#user-nav .dropdown-menu li {
+    display: block;
+}
+
+#user-nav .dropdown-menu li a {
+    color: #fff;
+    padding: 8px 10px;
+    text-decoration: none;
+}
+
+#user-nav .dropdown-menu li a:hover {
+    background-color: #555;
+}
+
+#user-nav .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+#user-nav .caret {
+    border-top: 4px solid #fff;
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
