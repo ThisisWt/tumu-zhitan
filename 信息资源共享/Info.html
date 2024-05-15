@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传与列表</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>文件上传</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <button type="submit">上传文件</button>
+    </form>
+
+    <!-- 显示上传状态信息的区域 -->
+    <div id="uploadStatus"></div>
+
+    <!-- 显示文件列表的区域 -->
+    <h2>文件列表</h2>
+    <ul id="fileList"></ul>
+
+    <!-- 更新文件列表的按钮 -->
+    <button id="updateButton">更新文件列表</button>
+
+    <!-- 指定文件查询和下载部分 -->
+    <h2>查询和下载文件</h2>
+    <input type="text" id="fileNameInput" placeholder="输入文件名">
+    <input type="text" id="fileExtensionInput" placeholder="输入文件后缀名">
+    <button id="searchButton">查询文件</button>
+    <div id="searchResult"></div>
+
+    <script>
+        $(document).ready(function() {
+            // 页面加载时加载文件列表
+            loadFileList();
+
+            // 点击按钮时更新文件列表
+            $('#updateButton').click(function() {
+                loadFileList();
+            });
+
+            // 点击按钮时查询文件并显示结果
+            $('#searchButton').click(function() {
+                searchFile();
+            });
+
+            $('#uploadForm').submit(function(e) {
+                e.preventDefault();
+
+                // 创建 FormData 对象
+                var formData = new FormData(this);
+
+                // 发起 AJAX 请求
+                $.ajax({
+                    url: 'upload.php',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log('Upload response:', response);
+                        // 显示上传状态信息
+                        $('#uploadStatus').text(response.message);
+
+                        // 上传成功后更新文件列表
+                        loadFileList();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload error:', status, error);
+                        // 显示上传失败信息
+                        $('#uploadStatus').text('文件上传失败，请重试。');
+                    }
+                });
+            });
+
+            function loadFileList() {
+                $.ajax({
+                    url: 'list_files.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log('File list response:', response);
+                        // 更新文件列表
+                        updateFileList(response.files);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('List files error:', status, error);
+                        $('#uploadStatus').text('无法加载文件列表，请重试。');
+                    }
+                });
+            }
+
+            function updateFileList(files) {
+                // 清空文件列表
+                $('#fileList').empty();
+
+                if (!files || files.length === 0) {
+                    $('#fileList').append('<li>没有文件</li>');
+                    return;
+                }
+
+                // 添加文件列表项
+                $.each(files, function(index, file) {
+                    $('#fileList').append('<li><a href="download.php?file=' + encodeURIComponent(file) + '">' + file + '</a></li>');
+                });
+            }
+
+            function searchFile() {
+                var fileName = $('#fileNameInput').val().trim();
+                var fileExtension = $('#fileExtensionInput').val().trim();
+                var fileNameWithExtension = fileName + '.' + fileExtension;
+
+                // 发起 AJAX 请求查询文件
+                $.ajax({
+                    url: 'search_file.php',
+                    type: 'GET',
+                    data: { file: fileNameWithExtension },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log('Search file response:', response);
+                        if (response.found) {
+                            // 文件存在，显示下载按钮
+                            $('#searchResult').html('<a href="download.php?file=' + encodeURIComponent(fileNameWithExtension) + '" download>下载文件</a>');
+                        } else {
+                            // 文件不存在，显示提示信息
+                            $('#searchResult').text('未找到该文件。');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Search file error:', status, error);
+                        $('#searchResult').text('查询文件时出错，请重试。');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
