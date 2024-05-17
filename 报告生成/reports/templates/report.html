@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>报告模板选择与上传</title>
+    <style>
+        body {
+            font-family: "宋体", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>选择报告模板类型</h1>
+    <form id="templateForm" onsubmit="return showInfoForm()">
+        <label for="template_type">请选择报告模板类型：</label>
+        <select name="template_type" id="template_type">
+            <option value="钢结构试验报告">钢结构试验报告</option>
+            <option value="混凝土结构设计报告">混凝土结构设计报告</option>
+            <!-- 其他模板类型 -->
+        </select>
+        <br><br>
+        <input type="button" value="确定" onclick="showInfoForm()">
+    </form>
+
+    <form id="infoForm" action="/generate_report" method="post" enctype="multipart/form-data" style="display: none;">
+        <input type="hidden" name="template_type" id="templateType">
+        <label for="title">试验名称：</label>
+        <input type="text" name="title" id="title" required>
+        <br><br>
+        <label for="name">姓名：</label>
+        <input type="text" name="name" id="name" required>
+        <br><br>
+        <label for="student_id">学号：</label>
+        <input type="text" name="student_id" id="student_id" required>
+        <br><br>
+        <label for="major">专业：</label>
+        <input type="text" name="major" id="major" required>
+        <br><br>
+        <label for="advisor">指导教师：</label>
+        <input type="text" name="advisor" id="advisor" required>
+        <br><br>
+        <label for="contact">联系方式：</label>
+        <input type="text" name="contact" id="contact" required>
+        <br><br>
+        <label for="purpose">试验目的：</label>
+        <textarea name="purpose" id="purpose" required></textarea>
+        <br><br>
+        <label for="principle">试验原理：</label>
+        <textarea name="principle" id="principle" required></textarea>
+        <br><br>
+        <label for="design">试验设计：</label>
+        <textarea name="design" id="design" required></textarea>
+        <br><br>
+        <label for="steps">试验步骤：</label>
+        <textarea name="steps" id="steps" required></textarea>
+        <br><br>
+        <label for="phenomenon">试验现象：</label>
+        <textarea name="phenomenon" id="phenomenon" required></textarea>
+        <br><br>
+        <label for="data_processing">数据处理：</label>
+        <textarea name="data_processing" id="data_processing" required></textarea>
+        <br><br>
+        <label for="conclusion">试验结论：</label>
+        <textarea name="conclusion" id="conclusion" required></textarea>
+        <br><br>
+        <label for="discussion">思考讨论：</label>
+        <textarea name="discussion" id="discussion" required></textarea>
+        <br><br>
+        <input type="submit" value="生成报告">
+    </form>
+
+    <script>
+        function showInfoForm() {
+            var templateType = document.getElementById("template_type").value;
+            document.getElementById("templateType").value = templateType;
+            document.getElementById("infoForm").action = "/generate_report/" + templateType;
+            document.getElementById("infoForm").style.display = "block";
+            return false; // 阻止表单的默认提交行为
+        }
+    </script>
+</body>
+
+</html>

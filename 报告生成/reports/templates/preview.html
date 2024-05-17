@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>报告预览</title>
+    <style>
+        body {
+            font-family: "宋体", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .content {
+            white-space: pre-wrap; /* 保留空白字符格式 */
+        }
+    </style>
+</head>
+<body>
+    <h1>报告预览</h1>
+    <h2>{{ template_type }}</h2>
+    <p>姓名：{{ name }}</p>
+    <p>学号：{{ student_id }}</p>
+    <br>
+    <div class="content">{{ report_content|safe }}</div> <!-- 展示报告内容 -->
+    <br>
+    <form action="/download_report/{{ name }}_{{ student_id }}_{{ template_type }}.docx" method="get">
+        <button type="submit">下载报告</button>
+    </form>
+    <form action="/modify_info" method="post">
+        <button type="submit">修改信息</button>
+    </form>
+</body>
+</html>
