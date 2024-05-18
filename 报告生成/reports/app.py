@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, url_for
 from docx import Document
 from werkzeug.utils import secure_filename
 import os
+from docx2pdf import convert
 
 app = Flask(__name__)
 
@@ -33,7 +34,7 @@ def generate_report(template_type):
 
         # 替换模板中的占位符
         placeholders = {
-            '${试验名称}$':title,
+            '${试验名称}$': title,
             '${姓名}$': name,
             '${学号}$': student_id,
             '${专业}$': major,
@@ -62,11 +63,13 @@ def generate_report(template_type):
         report_path = os.path.join('generated_reports', filename)
         document.save(report_path)
 
-        # 读取生成的报告文件内容
-        report_content = read_document_content(report_path)
+        # 生成 PDF 文件
+        pdf_filename = secure_filename(f"{name}_{student_id}_{template_type}.pdf")
+        pdf_path = os.path.join('generated_reports', pdf_filename)
+        convert(report_path, pdf_path)
 
         # 将报告文件内容传递给预览页面
-        return render_template('preview.html', name=name, student_id=student_id, template_type=template_type, report_content=report_content)
+        return render_template('preview.html', name=name, student_id=student_id, template_type=template_type, pdf_filename=pdf_filename)
     except Exception as e:
         return f"出现错误：{str(e)}"
 
@@ -79,12 +82,13 @@ def download_report(name, student_id, template_type):
     except Exception as e:
         return f"出现错误：{str(e)}"
 
-def read_document_content(path):
-    document = Document(path)
-    content = ""
-    for paragraph in document.paragraphs:
-        content += paragraph.text + "<br>"
-    return content
+@app.route('/preview_pdf/<pdf_filename>')
+def preview_pdf(pdf_filename):
+    try:
+        pdf_path = os.path.join('generated_reports', pdf_filename)
+        return send_file(pdf_path)
+    except Exception as e:
+        return f"出现错误：{str(e)}"
 
 @app.route('/modify_info', methods=['POST'])
 def modify_info():
@@ -92,4 +96,3 @@ def modify_info():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
