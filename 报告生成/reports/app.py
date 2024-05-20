@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, send_file, url_for
+from flask import Flask, render_template, request, send_file, url_for, session
 from docx import Document
 from werkzeug.utils import secure_filename
 import os
 from docx2pdf import convert
+import pythoncom
 
 app = Flask(__name__)
 
@@ -59,24 +60,36 @@ def generate_report(template_type):
             os.makedirs('generated_reports')
 
         # 保存生成的报告文件到 generated_reports 文件夹中
-        filename = secure_filename(f"{name}_{student_id}_{template_type}.docx")
+        filename = secure_filename(f"{student_id}.docx")  # 先生成一个临时文件名
         report_path = os.path.join('generated_reports', filename)
         document.save(report_path)
 
-        # 生成 PDF 文件
-        pdf_filename = secure_filename(f"{name}_{student_id}_{template_type}.pdf")
-        pdf_path = os.path.join('generated_reports', pdf_filename)
-        convert(report_path, pdf_path)
+        # 生成最终的文件名
+        final_filename = f"{title}_{name}_{student_id}_{template_type}.docx"
+        final_report_path = os.path.join('generated_reports', final_filename)
+        os.rename(report_path, final_report_path)
+
+        # 初始化COM库
+        pythoncom.CoInitialize()
+
+        try:
+            # 生成 PDF 文件
+            pdf_filename = f"{title}_{name}_{student_id}_{template_type}.pdf"
+            pdf_path = os.path.join('generated_reports', pdf_filename)
+            convert(final_report_path, pdf_path)
+        finally:
+            # 取消初始化COM库
+            pythoncom.CoUninitialize()
 
         # 将报告文件内容传递给预览页面
-        return render_template('preview.html', name=name, student_id=student_id, template_type=template_type, pdf_filename=pdf_filename)
+        return render_template('preview.html', name=name, student_id=student_id, template_type=template_type, pdf_filename=pdf_filename, title=title)
     except Exception as e:
         return f"出现错误：{str(e)}"
 
-@app.route('/download_report/<name>_<student_id>_<template_type>.docx')
-def download_report(name, student_id, template_type):
+@app.route('/download_report/<title>_<name>_<student_id>_<template_type>.docx')
+def download_report(title, name, student_id, template_type):
     try:
-        filename = secure_filename(f"{name}_{student_id}_{template_type}.docx")
+        filename = f"{title}_{name}_{student_id}_{template_type}.docx"
         report_path = os.path.join('generated_reports', filename)
         return send_file(report_path, as_attachment=True)
     except Exception as e:
@@ -92,7 +105,11 @@ def preview_pdf(pdf_filename):
 
 @app.route('/modify_info', methods=['POST'])
 def modify_info():
-    return render_template('report.html')
+    name = request.form['name']
+    student_id = request.form['student_id']
+    template_type = request.form['template_type']
+    title = request.form['title']
+    return render_template('report.html', name=name, student_id=student_id, template_type=template_type, title=title)
 
 if __name__ == '__main__':
     app.run(debug=True)

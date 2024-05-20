@@ -37,15 +37,20 @@
 <body>
     <h1>报告预览</h1>
     <h2>{{ template_type }}</h2>
+    <p>试验名称：{{ title }}</p>
     <p>姓名：{{ name }}</p>
     <p>学号：{{ student_id }}</p>
     <br>
     <button onclick="showPdfPreview()">预览</button>
     <br><br>
-    <form action="/download_report/{{ name }}_{{ student_id }}_{{ template_type }}.docx" method="get">
+    <form action="/download_report/{{ title }}_{{ name }}_{{ student_id }}_{{ template_type }}.docx" method="get">
         <button type="submit">下载报告</button>
     </form>
     <form action="/modify_info" method="post">
+        <input type="hidden" name="title" value="{{ title }}">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="student_id" value="{{ student_id }}">
+        <input type="hidden" name="template_type" value="{{ template_type }}">
         <button type="submit">修改信息</button>
     </form>
 
@@ -53,7 +58,7 @@
         <button onclick="closePdfPreview()">关闭</button>
         <iframe id="pdf-preview" src=""></iframe>
     </div>
-
+    
     <script>
         function showPdfPreview() {
             var pdfUrl = "{{ url_for('preview_pdf', pdf_filename=pdf_filename) }}";

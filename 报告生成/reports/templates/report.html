@@ -82,6 +82,23 @@
             document.getElementById("infoForm").style.display = "block";
             return false; // 阻止表单的默认提交行为
         }
+
+        // 预填充表单
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const student_id = urlParams.get('student_id');
+            const template_type = urlParams.get('template_type');
+            const title = urlParams.get('title');
+
+            if (name && student_id && template_type && title) {
+                document.getElementById("name").value = name;
+                document.getElementById("student_id").value = student_id;
+                document.getElementById("template_type").value = template_type;
+                document.getElementById("title").value = title;
+                showInfoForm();
+            }
+        }
     </script>
 </body>
 
