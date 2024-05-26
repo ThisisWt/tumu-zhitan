@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评论回车发布</title>
+    <style>
+        .wrapper {
+            min-width: 400px;
+            max-width: 800px;
+            display: flex;
+            justify-content: flex-end;
+        }
+ 
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            /* 不允许超出大盒子 */
+            background: url(./images/avatar.jpg) no-repeat center / cover;
+            /* 大部分情况下，图片样式都是这样设置的 */
+            margin-right: 20px;
+        }
+ 
+        /* 
+        outline：outline（轮廓）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。
+        注释：轮廓线不会占据空间，也不一定是矩形。
+    */
+ 
+        /* 
+        transition：设置过度属性
+        与.wrapper textarea:focus {
+            border-color: #e4e4e4;
+            background: #fff;
+            height: 50px;
+        }配合使用，表示光标在文本域中时，所有样式（属性值all）在2s内向
+            border-color:#e4e4e4;
+            background: #fff;
+            height: 50px;
+        平滑过渡
+    */
+ 
+        .wrapper textarea {
+            outline: none;
+            /* 这行代码可省略 */
+ 
+            border-color: transparent;
+            /* 边框颜色为透明 */
+ 
+            resize: none;
+            /* 用户无法自行调元素的尺寸，常用于文本域 */
+ 
+            background: #f5f5f5;
+            border-radius: 4px;
+            flex: 1;
+            padding: 10px;
+ 
+            /* 这行代码与下面.wrapper textarea:focus的那几行代码配合，可以让相关样式在获取焦点事件的时候平滑过渡 */
+            transition: all 0.5s;
+ 
+            height: 30px;
+        }
+ 
+        /*用法类似于 选择器:hover */
+        .wrapper textarea:focus {
+            border-color: #e4e4e4;
+            background: #fff;
+            height: 50px;
+        }
+ 
+        .wrapper button {
+            background: #00aeec;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            margin-left: 10px;
+            width: 70px;
+            cursor: pointer;
+        }
+ 
+        .wrapper .total {
+            margin-right: 80px;
+            color: #999;
+            margin-top: 5px;
+            opacity: 0;
+            /* 
+                opacity设置透明度，0是完全透明，1是完全不透明
+                opacity从0变成1时，元素会平滑显现
+            */
+            transition: all 0.5s;
+        }
+ 
+        .list {
+            min-width: 400px;
+            max-width: 800px;
+        }
+ 
+        .list .item {
+            width: 100%;
+            display: flex;
+        }
+ 
+        .list .item .info {
+            flex: 1;
+            border-bottom: 1px dashed #e4e4e4;
+            padding-bottom: 10px;
+        }
+ 
+        .list .item p {
+            margin: 0;
+        }
+ 
+        .list .item .name {
+            color: #FB7299;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 2em;
+        }
+ 
+        .list .item .text {
+            color: #333;
+            padding: 10px 0;
+        }
+ 
+        .list .item .time {
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="wrapper">
+        <i class="avatar"></i> <!-- 需用可在一行排列且可设置宽高的行内块元素 -->
+        <textarea id="tx" placeholder="发一条友善的评论" rows="2" maxlength="200"></textarea>
+        <button>发布</button>
+    </div>
+    <div class="wrapper">
+        <span class="total">0/200字</span>
+    </div>
+    <div class="list">
+        <!-- <div class="item">
+            <i class="avatar"></i>
+            <div class="info">
+                <p class="name">早八睡不醒午觉睡不够的程序员</p>
+                <p class="text">大家都辛苦啦，感谢各位大大的努力，能圆满完成真是太好了[笑哭][支持]</p>
+                <p class="time">2022-10-10 20:29:21</p>
+            </div>
+        </div> -->
+    </div>
+    <script>
+        //获取元素
+        const tx = document.querySelector('#tx')
+        const button = document.querySelector('.wrapper button')
+        const text = document.querySelector('.text')
+        const time = document.querySelector('.time')
+        const list = document.querySelector('.list')
+        const total = document.querySelector('.total')
+ 
+        //函数功能：发布评论
+        function fabu() {
+            //检测用户输入的内容左右两端是否带有空格，若有空格，发布时自动取消左右两端的空格
+            //若用户发布的内容为空，则自动取消该条评论的发送，并弹出提示框：请勿发送空白评论！
+            if (tx.value.trim() === '') {
+                tx.value = ''
+                total.innerHTML = '0/200字'
+                alert('请勿发送空白评论！')
+                return
+            }
+ 
+            //创建新的元素节点
+            const div = document.createElement('div')
+ 
+            //修改元素节点的内容
+            div.className = 'item'
+            div.innerHTML = `
+            <i class="avatar"></i>
+            <div class="info">
+                <p class="name">早八睡不醒午觉睡不够的程序员</p>
+                <p class="text">${tx.value}</p>
+                <p class="time">${new Date().toLocaleString()}</p>
+            </div>
+            `
+ 
+            //清空用户输入的内容
+            tx.value = ''
+            total.innerHTML = `${tx.value.length}/200字`
+ 
+            //将用户输入的内容追加到评论区里
+            list.append(div)
+        }
+ 
+        //鼠标点击发布，调用发布函数
+        button.addEventListener('click', () => {
+            fabu()
+        })
+ 
+        // 键盘按下Enter，调用发布函数
+        tx.addEventListener('keyup', e => {
+            if (e.key === 'Enter') fabu()
+        })
+ 
+        //输入框获得焦点，右下角自动显示字数
+        tx.addEventListener('focus', function () {
+            total.style.opacity = 1
+        })
+ 
+        //输入框失去焦点，右下角字数显示自动消失
+        tx.addEventListener('blur', function () {
+            total.style.opacity = 0
+        })
+ 
+        //用户输入时，实时显示输入字数
+        tx.addEventListener('input', () => {
+            total.innerHTML = `${tx.value.length}/200字`
+        })
+ // 函数功能：保存评论到本地存储
+function saveComment(comment) {
+    // 检查本地存储中是否已经有评论列表，如果没有则创建一个空数组
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    // 将新评论添加到评论列表中
+    comments.push(comment);
+    // 将更新后的评论列表保存到本地存储中
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
+
+// 函数功能：加载并显示评论
+function loadComments() {
+    // 从本地存储中获取评论列表
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    // 遍历评论列表，并将每条评论显示在页面上
+    comments.forEach(comment => {
+        addCommentToDOM(comment);
+    });
+}
+
+// 函数功能：将评论添加到页面中显示
+function addCommentToDOM(comment) {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+        <i class="avatar"></i>
+        <div class="info">
+            <p class="name">早八睡不醒午觉睡不够的程序员</p>
+            <p class="text">${comment}</p>
+            <p class="time">${new Date().toLocaleString()}</p>
+        </div>
+    `;
+    // 将评论添加到评论区
+    document.querySelector('.list').appendChild(div);
+}
+
+// 页面加载时加载并显示评论
+window.addEventListener('load', () => {
+    loadComments();
+});
+
+// 发布评论时保存评论到本地存储并显示
+function fabu() {
+    if (tx.value.trim() === '') {
+        tx.value = '';
+        total.innerHTML = '0/200字';
+        alert('请勿发送空白评论！');
+        return;
+    }
+
+    // 保存评论到本地存储
+    saveComment(tx.value);
+
+    // 将评论显示在页面中
+    addCommentToDOM(tx.value);
+
+    // 清空输入框内容
+    tx.value = '';
+    total.innerHTML = '0/200字';
+}
+
+// 其他事件监听器保持不变
+
+    </script>
+ 
+</body>
+ 
+</html>

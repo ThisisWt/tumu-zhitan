@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <title>blog</title>
+    
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="../软件前端/bootstrap/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    
+        <link rel="stylesheet" href="../软件前端/css/common.css">
+        <link rel="stylesheet" href="../软件前端/css/blog_list.css">
+
+    <title>文件上传与列表</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        #system-time {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color:aliceblue;
+            color:black;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header pull-left">
+          <a href="index.html" class="navbar-brand">
+            <small>
+              <i class="fa fa-leaf"></i>
+              首页
+            </small>
+          </a>
+        </div>
+        <div class="container-fluid"> 
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">土木智探</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="https://github.com/ThisisWt/tumu-zhitan">关于我们</a></li>
+                <li><a href="#">软件介绍</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        信息资源共享 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../信息资源共享/Info.html">文件资源共享</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">博客系统</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      模型生成与建立 <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a href="#">导入bim文件生成</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">多目视觉生成模型</a></li>
+                  </ul>
+              </li>
+              <li><a href="#">标准报告生成</a></li>
+              <li><a href="#">信息云图生成</a></li>
+              <li class=""><a title="" href="../login and register/test_login.html"> <span class="text">&nbsp;退出系统</span></a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <img src="../软件前端/images/cat.jpg" alt="猫猫">
+        <span>我的博客系统</span>
+    </div>
+ 
+    <!-- 页面的主体部分 -->
+    <!-- .container 作为页面的版心 -->
+    <!-- 这个部分是在页面中 水平居中对齐的 左右两侧会留出一定的边距 这个东西很多网站都有 称为"版心" -->
+    <div class="container">
+        <!-- 左侧个人信息 -->
+        <div class="container-left">
+            <!-- 整个用户信息区 -->
+            <div class="card">
+                <!-- 用户的头像 -->
+                <img src="../软件前端/images/cat.jpg" alt="夜雪迎春">
+                <!-- 用户名 -->
+                <a href="../login and register/test_login.html?username={username}"></a>
+                <h3 id="username">usr</h3>
+                <!-- 统计信息 -->
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>               
+                <div class="counter">
+                    <!-- 两篇文章,一个分类 -->
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧内容详情 -->
+        <div class="container-right">
+            <!-- blog对应一个博客 -->
+            <div class="blog">
+                <!-- 博客标题 -->
+                <div class="title">我的第一篇博客</div>
+                <!-- 博客发布时间 -->
+                <div class="date">2023-05-12 12:00</div>
+                <!-- 博客摘要 -->
+                <div class="desc">
+                <!-- lorem测试 -->
+                从今天开始,我要认真写博客,Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quas laborum corrupti tempora aliquam nulla eveniet omnis quaerat quod odio! Suscipit vero, repudiandae consequuntur illo dignissimos a non? Quos, sequi.
+                </div>
+                <!-- ">>" 转义 -->
+                <a href="blog_detail.html?blogId=1">查看全文&gt;&gt; </a>
+            </div>
+            <div class="blog">
+                <!-- 博客标题 -->
+                <div class="title">我的第二篇博客</div>
+                <!-- 博客发布时间 -->
+                <div class="date">2023-05-12 14:00</div>
+                <!-- 博客摘要 -->
+                <div class="desc">
+                <!-- lorem测试 -->
+                从今天开始,我要认真写博客,Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quas laborum corrupti tempora aliquam nulla eveniet omnis quaerat quod odio! Suscipit vero, repudiandae consequuntur illo dignissimos a non? Quos, sequi.
+                </div>
+                <!-- 不能直接写大于号,因为大于号会被当做标签的一部分 ,写出转义字符&gt; -->
+                <a href="blog_detail.html?blogId=2">查看全文&gt;&gt; </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../软件前端/bootstrap/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+    <div id="system-time"></div>
+
+    <script>
+        function updateSystemTime() {
+            var now = new Date();
+            var year = now.getFullYear().toString();
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var day = now.getDate().toString().padStart(2, '0');
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            var timeString = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            document.getElementById('system-time').textContent = '系统时间: ' + timeString;
+        }
+        
+        // Update system time every second
+        setInterval(updateSystemTime, 1000);
+        
+        // Initial call to display time immediately
+        updateSystemTime();
+        </script>
+
+<script>
+    // 从本地存储中检索并显示用户名
+    var username = localStorage.getItem('username');
+    document.getElementById('username').innerText = username;
+</script>
+</body>
+</html>

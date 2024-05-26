@@ -18,9 +18,9 @@
     <h1 style="font-family:arial,simsun !important">土木智探结构分析登录入口</h1>
     <div id="main">
         <div class="title">欢迎使用，请登录</div>
-        <form action="test_login.php" method="post" onsubmit="return enter()">
-            <input type="text" name="username" placeholder="用户名"><br>
-            <input type="text" name="password" placeholder="密码"><br>
+        <form id="loginForm" action="test_login.php" method="post" onsubmit="return enter()">
+            <input type="text" name="username" id="username" placeholder="用户名"><br>
+            <input type="password" name="password" id="password" placeholder="密码"><br>
             <input type="submit" value="登录">
             <input type="reset" value="重写">
             <div class="links-container"><!--采用相对定位，定位在此div的右下角，在当前页面打开-->
@@ -29,5 +29,31 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function enter() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // 发送 AJAX 请求
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'test_login.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert(response.message); // 登录成功提示消息
+                        window.location.href = "../软件前端/index.html"; // 登录成功后重定向到指定页面
+                    } else {
+                        alert(response.message); // 显示错误消息
+                    }
+                }
+            };
+            xhr.send("username=" + username + "&password=" + password);
+
+            return false; // 阻止表单提交
+        }
+    </script>
 </body>
 </html>
