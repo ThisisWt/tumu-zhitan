@@ -10,14 +10,9 @@
             font-family: "宋体", Arial, sans-serif;
             font-size: 14px;
             line-height: 1.5;
-        }
-    </style>
-    <style>
-        body {
             text-align: center;
-            background-image: url("../../../土木智探前端/background.png");
+            background-image: url("/static/background.png");
             background-size: cover;
-            /* 设置背景满铺 */
             background-attachment: fixed;
         }
 
@@ -28,7 +23,7 @@
 </head>
 
 <body>
-    <img src="../../../土木智探前端/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
     <form id="templateForm" onsubmit="return showInfoForm()">
         <label for="template_type">请选择报告模板类型：</label>
         <select name="template_type" id="template_type">
@@ -95,7 +90,7 @@
             document.getElementById("infoForm").style.display = "block";
             return false; // 阻止表单的默认提交行为
         }
-    
+
         // 预填充表单
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -103,7 +98,7 @@
             const student_id = urlParams.get('student_id');
             const template_type = urlParams.get('template_type');
             const title = urlParams.get('title');
-    
+
             if (name && student_id && template_type && title) {
                 document.getElementById("name").value = name;
                 document.getElementById("student_id").value = student_id;

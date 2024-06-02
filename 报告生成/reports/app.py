@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, url_for, session
+from flask import Flask, render_template, request, send_file, url_for, session, abort
 from docx import Document
 from werkzeug.utils import secure_filename
 import os
@@ -14,6 +14,7 @@ def index():
 @app.route('/generate_report/<template_type>', methods=['POST'])
 def generate_report(template_type):
     try:
+        # 获取表单数据
         title = request.form['title']
         name = request.form['name']
         student_id = request.form['student_id']
@@ -30,7 +31,10 @@ def generate_report(template_type):
         discussion = request.form['discussion']
 
         # 读取选定的模板文件
-        template_path = f"templates/{template_type}.docx"
+        template_path = os.path.join(app.root_path, 'templates', f"{template_type}.docx")
+        if not os.path.exists(template_path):
+            abort(404, description="Template not found")
+        
         document = Document(template_path)
 
         # 替换模板中的占位符
@@ -60,13 +64,17 @@ def generate_report(template_type):
             os.makedirs('generated_reports')
 
         # 保存生成的报告文件到 generated_reports 文件夹中
+        report_dir = os.path.join('报告生成','reports','generated_reports')  # 报告生成-reports 目录下的 generated_reports 文件夹
+        if not os.path.exists(report_dir):
+            os.makedirs(report_dir)
+
         filename = secure_filename(f"{student_id}.docx")  # 先生成一个临时文件名
-        report_path = os.path.join('generated_reports', filename)
+        report_path = os.path.join(report_dir, filename)
         document.save(report_path)
 
         # 生成最终的文件名
         final_filename = f"{title}_{name}_{student_id}_{template_type}.docx"
-        final_report_path = os.path.join('generated_reports', final_filename)
+        final_report_path = os.path.join(report_dir, final_filename)
         os.rename(report_path, final_report_path)
 
         # 初始化COM库
@@ -75,7 +83,7 @@ def generate_report(template_type):
         try:
             # 生成 PDF 文件
             pdf_filename = f"{title}_{name}_{student_id}_{template_type}.pdf"
-            pdf_path = os.path.join('generated_reports', pdf_filename)
+            pdf_path = os.path.join(report_dir, pdf_filename)
             convert(final_report_path, pdf_path)
         finally:
             # 取消初始化COM库

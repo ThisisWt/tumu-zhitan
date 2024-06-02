@@ -10,6 +10,10 @@
             font-family: "宋体", Arial, sans-serif;
             font-size: 14px;
             line-height: 1.5;
+            text-align: center;
+            background-image: url("/static/background.png");
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         .pdf-container {
@@ -37,23 +41,10 @@
             font-size: 14px;
         }
     </style>
-    <style>
-        body {
-            text-align: center;
-            background-image: url("../../../土木智探前端/background.png");
-            background-size: cover;
-            /* 设置背景满铺 */
-            background-attachment: fixed;
-        }
-
-        .white {
-            color: white;
-        }
-    </style>
 </head>
 
 <body>
-    <img src="../../../土木智探前端/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
     <h1>报告预览</h1>
     <h2>{{ template_type }}</h2>
     <p>试验名称：{{ title }}</p>
@@ -84,12 +75,12 @@
             document.getElementById('pdf-preview').src = pdfUrl;
             document.getElementById('pdf-container').style.display = 'block';
         }
-    
+
         function closePdfPreview() {
             document.getElementById('pdf-container').style.display = 'none';
             document.getElementById('pdf-preview').src = '';
         }
     </script>
-    
 </body>
+
 </html>
