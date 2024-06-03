@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土木智探——创建建筑模型</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: "宋体", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: center;
+            background-image: url("/static/background.png");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .white {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <h1>选择exe文件</h1>
+    <!-- 修改了这里，添加了文件上传表单 -->
+    <form id="exe_form" enctype="multipart/form-data">
+        <input type="file" id="exe_file" accept=".exe">
+        <input type="file" id="folder_file" accept=".folder" hidden>
+    </form>
+    <button id="run_button">运行</button>
+
+    <script>
+        $(document).ready(function(){
+            $('#run_button').click(function(){
+                var exe_path = $('#exe_file').val();
+                var folder_path = $('#folder_path').val();
+
+                // 添加了文件上传的处理
+                var formData = new FormData();
+                formData.append('exe_path', exe_path);
+                formData.append('folder_file', $('#folder_file')[0].files[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/run_exe',
+                    data: formData,
+                    // 修改了这里以支持文件上传
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        alert(response.message);
+                    },
+                    error: function(xhr, status, error){
+                        alert('发生错误: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

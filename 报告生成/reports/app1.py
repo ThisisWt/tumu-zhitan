@@ -7,8 +7,8 @@ import pythoncom
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
+@app.route('/app1/')
+def app1_home():
     return render_template('report.html')
 
 @app.route('/generate_report/<template_type>', methods=['POST'])
