@@ -3,8 +3,9 @@ import subprocess
 import tempfile
 
 app = Flask(__name__)
+app.config['SERVER_NAME'] = 'localhost:5001'
 
-@app.route('/app2/')
+@app.route('/')
 def app2_home():
     return render_template('exe.html')
 
