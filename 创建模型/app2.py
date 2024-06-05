@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import subprocess
+import tempfile
 
-app= Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/app2/')
 def app2_home():
@@ -9,13 +10,20 @@ def app2_home():
 
 @app.route('/run_exe', methods=['POST'])
 def run_exe():
-    exe_path = request.form['exe_path']
-    # 这里需要修改为从表单中获取文件路径的方式
-    folder_path = request.files['folder_file'].filename
+    exe_file = request.files['exe_file']
     
     try:
-        subprocess.run([exe_path, folder_path], check=True)
-        response = {'status': 'success', 'message': '程序运行成功'}
+        # 创建临时文件
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            # 将上传的exe文件内容写入临时文件
+            exe_content = exe_file.read()
+            tmp_file.write(exe_content)
+            # 获取临时文件路径
+            exe_path = tmp_file.name
+
+            # 运行exe文件
+            subprocess.run([exe_path], check=True)
+            response = {'status': 'success', 'message': '程序运行成功'}
     except subprocess.CalledProcessError as e:
         response = {'status': 'error', 'message': f'运行程序时出错: {e}'}
 

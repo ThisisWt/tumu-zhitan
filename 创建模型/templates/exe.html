@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +15,6 @@
             background-size: cover;
             background-attachment: fixed;
         }
-
         .white {
             color: white;
         }
@@ -27,21 +25,19 @@
     <h1>选择exe文件</h1>
     <!-- 修改了这里，添加了文件上传表单 -->
     <form id="exe_form" enctype="multipart/form-data">
-        <input type="file" id="exe_file" accept=".exe">
-        <input type="file" id="folder_file" accept=".folder" hidden>
+        <input type="file" id="exe_file" name="exe_file" accept=".exe">
     </form>
     <button id="run_button">运行</button>
 
     <script>
         $(document).ready(function(){
             $('#run_button').click(function(){
-                var exe_path = $('#exe_file').val();
-                var folder_path = $('#folder_path').val();
+                // 获取文件对象
+                var exe_file = $('#exe_file')[0].files[0];
 
                 // 添加了文件上传的处理
                 var formData = new FormData();
-                formData.append('exe_path', exe_path);
-                formData.append('folder_file', $('#folder_file')[0].files[0]);
+                formData.append('exe_file', exe_file);
 
                 $.ajax({
                     type: 'POST',
