@@ -51,8 +51,13 @@ def search():
         invalid_columns = [col for col in filtered_gdf.columns if isinstance(filtered_gdf[col].iloc[0], list)]
         filtered_gdf = filtered_gdf.drop(columns=invalid_columns)
 
+        # 确保 static 目录存在
+        if not os.path.exists('static'):
+            os.makedirs('static')
+
         # 保存为 GeoJSON 文件
         save_path = os.path.join('static', 'specific_building.geojson')
+        print(f"Saving GeoJSON to: {save_path}")
         filtered_gdf.to_file(save_path, driver="GeoJSON")
 
         # 创建地图并保存为HTML文件
@@ -67,6 +72,7 @@ def search():
 
     except Exception as e:
         return jsonify({'error': f"Error fetching building data: {e}"}), 500
+
 
 
 if __name__ == '__main__':
