@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,34 +22,24 @@
 </head>
 <body>
     <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
-    <h1>选择exe文件</h1>
-    <form id="exe_form" enctype="multipart/form-data">
-        <input type="file" id="exe_file" name="exe_file" accept=".exe">
-    </form>
-    <button id="run_button">运行</button>
+    <h1>创建模型</h1>
+    <button id="run_button">选择文件</button>
 
     <script>
         $(document).ready(function(){
             $('#run_button').click(function(){
-                var exe_file = $('#exe_file')[0].files[0];
-                if (!exe_file) {
-                    alert('请先选择一个exe文件');
-                    return;
-                }
-
-                var formData = new FormData();
-                formData.append('exe_file', exe_file);
-
                 $.ajax({
                     type: 'POST',
                     url: '/run_exe',
-                    data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response){
                         alert(response.message);
                         if (response.output) {
                             console.log('程序输出: ' + response.output);
+                        }
+                        if (response.error) {
+                            console.log('程序错误: ' + response.error);
                         }
                     },
                     error: function(xhr, status, error){
