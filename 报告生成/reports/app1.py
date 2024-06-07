@@ -6,9 +6,10 @@ from docx2pdf import convert
 import pythoncom
 
 app = Flask(__name__)
+app.config['SERVER_NAME'] = 'localhost:5000'
 
 @app.route('/')
-def index():
+def app1_home():
     return render_template('report.html')
 
 @app.route('/generate_report/<template_type>', methods=['POST'])
