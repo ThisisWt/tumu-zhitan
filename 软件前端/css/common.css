@@ -1,0 +1,133 @@
+/* 博客导航栏通用样式 */
+/* 去除浏览器页面的默认样式 */
+* {
+    /* 设置盒子模型,使边框不再撑大盒子 */
+    box-sizing: border-box;
+    /* 内外边距设置为0 */
+    padding: 0;
+    margin: 0;
+}
+/* 给整个页面加背景图 */
+html,body {
+    /* 当前 html 的父元素，就是浏览器窗口，此处的 100% 意思是 html 元素的高度和浏览器窗口一样高
+    当前 body 的父元素，就是 html，此处的 100% 意思就是 html 多高，body，就多高 */
+    height: 50%;
+}
+
+/* 导航栏设置 */
+.nav {
+    /* 导航栏高度一般都是50px */
+    /* 宽度不设置也是默认100% */
+    width: 50%;
+    height: 50px;
+    /* 导航栏里面的文本颜色 */
+    color:black;
+    /* 使用 flex 进行弹性布局,让导航栏里面的内容进行水平排列 */
+    display: flex;
+    /* 实现导航栏内容垂直居中 */
+    align-items: center;
+    
+}
+/* 导航栏照片设置 */
+.nav img {
+    width: 40px;
+    height: 40px;
+    /* 照片的圆角矩形,设置为正方形边长的一半即为圆形 */
+    border-radius: 20px;
+     /* 照片的左右外边距 */
+    margin-left: 30px;
+    margin-right: 10px;
+}
+/* 让博客系统后面的文字空出70的空间,保证后面的文字被挤到最右边 */
+.spacer {
+    width: 70%;
+}
+/* 将a标签里面的属性设置一下 */
+.nav a {
+    /* 超链接的文本颜色 */
+    color: white;
+    /* 去掉文字下面的下划线 */
+    text-decoration: none;
+    /* 设置文字的左右内边距,设置外边距也行 */
+    /* 但是内边距能扩大点击范围,效果更好 */
+    padding: 0 10px; 
+}
+/* 这里是版心相关的样式 */
+.container {
+    /* 版心不是和窗口一样宽的 */
+    width: 1000px;
+    /* 这个写法中 左右两侧必须有空格 不能没有(如果没有 可能无法被浏览器识别)
+    这个 calc 是 CSS3 里面提供的一个内置的函数，平时看到的大部分的 CSS 都是 CSS2 这个标准中规定的，但是 CSS3 
+    对 2 进行了一定的扩充，CSS3 现在也存在了很多年，主流的浏览器也都支持 */
+    height: calc(100% - 50px);
+    /* 内边距 水平居中 */
+    margin: 0 auto;
+    /* 对于 div 这样的块级元素 默认独占一行 如果需要让多个 div 在一行内排列 就需要使用弹性布局 */
+    display: flex;
+    /* 让元素中间有一些等分的间隔 就是右边留的 5px */
+    justify-content: space-between;
+    /* background-color: gray; */
+ 
+}
+ 
+/* 左侧样式 */
+.container-left {
+    height: 100%;
+    width: 200px;
+    /* background-color: orange; */
+}
+/* 右侧样式 */
+.container-right {
+    height: 100%;
+    /* 左右之间留出   一点 */  
+    width: 795px;
+    /* 白色半透明背景 */
+    background-color: rgba(255,255,255,0.8);
+    /* 圆角矩形 */
+    border-radius: 10px;
+    /* padding: 20px; */
+}
+/* 设置用户信息区域 card的样式 */
+.card {
+    /* 白色半透明 */
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    /* 让头像居中 设置四个方向的内边距都是 30px */
+    padding: 30px;
+}
+ 
+/* card中照片的样式 */
+.card img {
+    /* 整个.card的宽度是200px, .card设置了四个方向的内边距30px */
+    /* 剩下能放图片的空间就是140px */
+    width: 140px;
+    height: 140px;
+    /* 设置边长的一半为圆形照片 */
+    border-radius: 50%;
+}
+/* 用户名样式 */
+.card h3 {
+    /* 设置居中对齐 */
+    text-align: center;
+    /* 这里使用内边距把用户名和头像撑开一个距离 */
+    padding: 10px;
+    color: green;
+}
+/* 设置gitee地址的样式 */
+.card a {
+    /* a 默认是行内元素 很多边距不生效 简单起见 直接设为块级元素 */
+    display: block;
+    /* 居中 */
+    text-align: center;
+    /* 设置下划线 */
+    text-decoration: none;
+    color: orange;
+    padding: 5px;
+}
+.card .counter {
+    /* 开启弹性布局 */
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    /* color: blue; */ 
+}

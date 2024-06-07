@@ -1,0 +1,60 @@
+/* 博客列表页专用样式 */
+.blog {
+    /* 高度不设置 让其取决于里面的内容高度综合 */
+    width: 100%;
+    padding: 20px;
+}
+/* 博客标题 */
+.blog .title {
+    /* 设置文字居中 */
+    text-align: center;
+    /* 文字大小 */
+    font-size: 22px;
+    /* 设置文字加粗 */
+    font-weight: bold;
+    /* 设置上下内边距为10 */
+    padding: 10px 0;
+}
+/* 发布时间 */
+.blog .date {
+    /* 文字居中 */
+    text-align: center;
+    /* 文字颜色 */
+    color: rgb(0,128,0);
+    /* 设置上下内边距为10 */
+    padding: 10px 0;
+}
+/* 博客的摘要的缩进 */
+.blog .desc {
+    /* 2缩进 */
+    text-indent: 2em;
+}
+/* a标签的样式设置 */
+.blog a {
+    /* 设置成块级元素，方便设置尺寸和边距 */
+    display: block;
+    width: 140px;
+    height: 40px;
+    /* 设置上下内边距10px 整个a标签内容水平居中 */
+    margin: 10px auto;
+    /* 加一个边框 */
+    border: 2px black solid;
+    /* 设置文字颜色*/
+    color: black;
+    /* 当文字的行高和元素高度一样的时候,文字恰好是垂直居中 */
+    line-height: 40px;
+    /* 设置文字水平居中 */
+    text-align: center;
+    /* 去除下划线 */
+    text-decoration: none;
+    /* border-radius: 10px; */
+    
+    /* 让悬停的变化过程柔和一些，加上过渡效果 */
+    transition: all 0.3s;
+}
+/* 伪类选择器 - 鼠标悬停的效果*/
+.blog a:hover {
+    /* 当鼠标停在整个元素的位置,颜色会变成黑色,同时文字颜色变成白色 */
+    background-color: #333;
+    color: white;
+}
