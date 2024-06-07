@@ -23,7 +23,6 @@
 <body>
     <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
     <h1>选择exe文件</h1>
-    <!-- 修改了这里，添加了文件上传表单 -->
     <form id="exe_form" enctype="multipart/form-data">
         <input type="file" id="exe_file" name="exe_file" accept=".exe">
     </form>
@@ -32,10 +31,12 @@
     <script>
         $(document).ready(function(){
             $('#run_button').click(function(){
-                // 获取文件对象
                 var exe_file = $('#exe_file')[0].files[0];
+                if (!exe_file) {
+                    alert('请先选择一个exe文件');
+                    return;
+                }
 
-                // 添加了文件上传的处理
                 var formData = new FormData();
                 formData.append('exe_file', exe_file);
 
@@ -43,14 +44,16 @@
                     type: 'POST',
                     url: '/run_exe',
                     data: formData,
-                    // 修改了这里以支持文件上传
                     contentType: false,
                     processData: false,
                     success: function(response){
                         alert(response.message);
+                        if (response.output) {
+                            console.log('程序输出: ' + response.output);
+                        }
                     },
                     error: function(xhr, status, error){
-                        alert('发生错误: ' + error);
+                        alert('发生错误: ' + xhr.responseText);
                     }
                 });
             });
