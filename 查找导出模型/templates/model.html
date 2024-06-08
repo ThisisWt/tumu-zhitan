@@ -1,20 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Building Data Search</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        #message { margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            margin-top: 20px;
+        }
+
+        body {
+            text-align: center;
+            background-image: url("../../土木智探前端/background.png");
+            background-size: cover;
+            /* 设置背景满铺 */
+            background-attachment: fixed;
+        }
+
+        .white {
+            color: white;
+        }
     </style>
+
 </head>
+
 <body>
+    <img src="../../土木智探前端/同济大学背景题头.png" style="width: 100%; object-position: center;">
     <div class="container">
         <h1>建筑物数据搜索</h1>
         <form id="searchForm">
@@ -31,7 +82,7 @@
         <div id="message"></div>
     </div>
     <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault();
             document.getElementById('message').innerHTML = 'Searching...';
 
@@ -40,19 +91,20 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('message').innerHTML = '<span style="color: red;">' + data.error + '</span>';
-                } else {
-                    document.getElementById('message').innerHTML = '<span style="color: green;">' + data.message + '</span><br><a href="' + data.map_url + '" target="_blank">查看地图</a>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<span style="color: red;">An error occurred</span>';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('message').innerHTML = '<span style="color: red;">' + data.error + '</span>';
+                    } else {
+                        document.getElementById('message').innerHTML = '<span style="color: green;">' + data.message + '</span><br><a href="' + data.map_url + '" target="_blank">查看地图</a>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('message').innerHTML = '<span style="color: red;">An error occurred</span>';
+                });
         });
     </script>
 </body>
+
 </html>
