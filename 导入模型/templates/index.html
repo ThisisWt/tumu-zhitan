@@ -1,60 +1,36 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Viewer</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-        #controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-        }
-    </style>
+    <title>3D Model Upload</title>
 </head>
 <body>
-    <div id="controls">
-        <input type="file" id="fileInput">
-        <button onclick="uploadAndLoadModel()">Load Model</button>
-    </div>
-    
-    <script src="/static/GLTFLoader.js"></script>
-    <script src="/static/OBJLoader.js"></script>
+    <h1>上传3D模型文件</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".obj,.gltf,.glb">
+        <button type="button" onclick="uploadFile()">上传</button>
+    </form>
     <script>
-        function uploadAndLoadModel() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            if (!file) {
-                console.error('No file selected');
-                return;
-            }
-            const formData = new FormData();
-            formData.append('file', file);
-
+        function uploadFile() {
+            var formData = new FormData(document.getElementById('uploadForm'));
             fetch('/upload', {
                 method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error(data.error);
-                    return;
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
                 }
-                const url = data.url;
-                console.log('Model URL:', url);
-                window.open(`/view_model?url=${encodeURIComponent(url)}`, '_blank');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.url) {
+                      window.location.href = `/view_model?url=${data.url}`;
+                  } else {
+                      alert('上传失败：' + (data.error || '未知错误'));
+                  }
+              }).catch(error => {
+                  console.error('Error:', error);
+                  alert('上传失败：' + error);
+              });
         }
     </script>
 </body>

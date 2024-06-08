@@ -1,4 +1,3 @@
-<!-- view_model.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,12 +25,13 @@
 </head>
 <body>
     <div id="modelContainer"></div>
-    
-    <script src="/static/three.min.js"></script>
-    <script src="/static/GLTFLoader.js"></script>
-    <script src="/static/OBJLoader.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/controls/OrbitControls.js"></script>
     <script>
-        let scene, camera, renderer, model;
+        let scene, camera, renderer, controls, model;
 
         function init() {
             scene = new THREE.Scene();
@@ -48,6 +48,9 @@
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(600, 600); // Set size for the container
             document.getElementById('modelContainer').appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.update();
 
             const urlParams = new URLSearchParams(window.location.search);
             const url = urlParams.get('url');
@@ -113,6 +116,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
+            controls.update();
             renderer.render(scene, camera);
         }
 
