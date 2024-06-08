@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Model Upload</title>
+    body {
+    text-align: center;
+    background-image: url("background.png");
+    background-size: cover;
+    /* 设置背景满铺 */
+    background-attachment: fixed;
+    }
 </head>
+
 <body>
+    <img src="../../土木智探前端/同济大学背景题头.png" style="width: 100%; object-position: center;">
     <h1>上传3D模型文件</h1>
     <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="file" accept=".obj,.gltf,.glb">
@@ -21,17 +31,18 @@
                     'Accept': 'application/json'
                 }
             }).then(response => response.json())
-              .then(data => {
-                  if (data.url) {
-                      window.location.href = `/view_model?url=${data.url}`;
-                  } else {
-                      alert('上传失败：' + (data.error || '未知错误'));
-                  }
-              }).catch(error => {
-                  console.error('Error:', error);
-                  alert('上传失败：' + error);
-              });
+                .then(data => {
+                    if (data.url) {
+                        window.location.href = `/view_model?url=${data.url}`;
+                    } else {
+                        alert('上传失败：' + (data.error || '未知错误'));
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('上传失败：' + error);
+                });
         }
     </script>
 </body>
+
 </html>
