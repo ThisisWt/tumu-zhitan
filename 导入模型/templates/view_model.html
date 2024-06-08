@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,27 @@
             height: 100vh;
             background-color: #f0f0f0;
         }
+
         #modelContainer {
             width: 600px;
             height: 600px;
             background-color: #000;
             border: 1px solid #ccc;
         }
+
+        body {
+            text-align: center;
+            background-image: url("../../土木智探前端/background.png");
+            background-size: cover;
+            /* 设置背景满铺 */
+            background-attachment: fixed;
+        }
     </style>
 </head>
+
 <body>
+    <img src="同济大学背景题头.png" style="width: 100%; object-position: center;">
+
     <div id="modelContainer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
@@ -124,4 +137,5 @@
         animate();
     </script>
 </body>
+
 </html>
