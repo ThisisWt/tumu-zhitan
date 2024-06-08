@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +12,49 @@
             font-size: 14px;
             line-height: 1.5;
             text-align: center;
-            background-image: url("/static/background.png");
+            background-image: url("../../土木智探前端/background.png");
             background-size: cover;
             background-attachment: fixed;
         }
+
         .white {
             color: white;
         }
     </style>
 </head>
+
 <body>
-    <img src="/static/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <img src="../../土木智探前端/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    <h1>创建模型</h1>
+    <button id="run_button">选择文件</button>
+
+    <script>
+        $(document).ready(function () {
+            $('#run_button').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/run_exe',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        alert(response.message);
+                        if (response.output) {
+                            console.log('程序输出: ' + response.output);
+                        }
+                        if (response.error) {
+                            console.log('程序错误: ' + response.error);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('发生错误: ' + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>大学背景题头.png" style="width: 100%; object-position: center;">
     <h1>创建模型</h1>
     <button id="run_button">选择文件</button>
 
