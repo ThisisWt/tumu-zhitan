@@ -25,7 +25,7 @@
 
         body {
             text-align: center;
-            background-image: url("media/background.png");
+            background-image: url("{% static 'media/background.png' %}");
             background-size: cover;
             /* 设置背景满铺 */
             background-attachment: fixed;
@@ -36,8 +36,8 @@
 
 <body>
 
-<img src="../MYApp/static/media/同济大学背景题头.png" style="width: 100%; object-position: center;">
-
+    <img src="{% static 'media/同济大学背景题头.png' %}" style="width: 100%; object-position: center;">
+    
 <h1>信息数据分析</h1>
     
     <div>
