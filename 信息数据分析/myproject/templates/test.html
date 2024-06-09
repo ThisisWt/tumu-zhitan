@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #imgFrame {
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            z-index: 1000;
+            display: none;
+            height: 900px;
+            width: 900px;
+        }
+
+        .myimg {
+            width: 500px;
+            height: 500px;
+            display: none;
+        }
+
+        body {
+            text-align: center;
+            background-image: url("media/background.png");
+            background-size: cover;
+            /* 设置背景满铺 */
+            background-attachment: fixed;
+        }
+
+    </style>
+</head>
+
+<body>
+    {#begin#}
+    <img src="../MYApp/static/media/同济大学背景题头.png" style="width: 100%; object-position: center;">
+    
+    <div>
+        <ul>
+            <button id="show1"> 显示降水量</button>
+            <div class="myimg" id="new1">
+                <img src="{% static 'media/降水量.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px" >
+            </div>
+        </ul>
+    </div>
+    <div id="imgFrame">
+        <div><a href="javascript:close();">隐藏降水量</a></div>
+        <div id="imgbox"></div>
+    </div>
+    {#end#}
+
+    <div>
+        <ul>
+            <button id="show2"> 显示土壤水分</button>
+            <div class="myimg" id="new2">
+                <img src="{% static 'media/土壤水分.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px">
+            </div>
+        </ul>
+    </div>
+    <div id="imgFrame">
+        <div><a href="javascript:close();">隐藏土壤水分</a></div>
+        <div id="imgbox"></div>
+    </div>
+
+        <div>
+        <ul>
+            <button id="show3"> 显示天气预报</button>
+            <div class="myimg" id="new3">
+                <img src="{% static 'media/天气预报.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px">
+            </div>
+        </ul>
+    </div>
+    <div id="imgFrame">
+        <div><a href="javascript:close();">隐藏天气预报</a></div>
+        <div id="imgbox"></div>
+    </div>
+    
+        <div>
+        <ul>
+            <button id="show4"> 显示气温</button>
+            <div class="myimg" id="new4">
+                <img src="{% static 'media/气温.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px">
+            </div>
+        </ul>
+    </div>
+    <div id="imgFrame">
+        <div><a href="javascript:close();">隐藏气温</a></div>
+        <div id="imgbox"></div>
+    </div>
+    
+        <div>
+        <ul>
+            <button id="show5"> 显示卫星云图</button>
+            <div class="myimg" id="new5">
+                <img src="{% static 'media/卫星云图.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px">
+            </div>
+        </ul>
+    </div>
+    <div id="imgFrame">
+        <div><a href="javascript:close();">隐藏卫星云图</a></div>
+        <div id="imgbox"></div>
+    </div>
+    
+    <button type="submit" id="Download">下载图片</button>
+
+    <script type="text/javascript">
+        // function showOriginal(img) {
+        //     document.getElementById("imgFrame").style.display = "block";
+        //     document.getElementById("imgbox").innerHTML = "<img src='" + img.getAttribute("original") + "' />";
+        // }
+        // function close() {
+        //     document.getElementById("imgFrame").style.display = "none";
+        // }
+
+        var obtn1 = document.getElementById('show1');
+        var newImg1 = document.getElementById('new1');
+
+        var obtn2 = document.getElementById('show2');
+        var newImg2 = document.getElementById('new2');
+        
+        var obtn3 = document.getElementById('show3');
+        var newImg3 = document.getElementById('new3');
+        
+        var obtn4 = document.getElementById('show4');
+        var newImg4 = document.getElementById('new4');
+        
+        var obtn5 = document.getElementById('show5');
+        var newImg5 = document.getElementById('new5');
+        
+        // window.onload = function(){
+        //2.绑定事件
+        obtn1.onclick = function () {
+            // 3.事件驱动程序
+            if (obtn1.innerHTML === '隐藏降水量') {
+                newImg1.style.display = 'none';
+                obtn1.innerHTML = '显示降水量';
+
+            } else {
+                newImg1.style.display = 'block';
+                obtn1.innerHTML = '隐藏降水量';
+            }
+        }
+
+
+        obtn2.onclick = function () {
+            // 3.事件驱动程序
+            if (obtn2.innerHTML === '隐藏土壤水分') {
+                newImg2.style.display = 'none';
+                obtn2.innerHTML = '显示土壤水分';
+
+            } else {
+                newImg2.style.display = 'block';
+                obtn2.innerHTML = '隐藏土壤水分';
+            }}
+            
+        obtn3.onclick = function () {
+            // 3.事件驱动程序
+            if (obtn3.innerHTML === '隐藏天气预报') {
+                newImg3.style.display = 'none';
+                obtn3.innerHTML = '显示天气预报';
+
+            } else {
+                newImg3.style.display = 'block';
+                obtn3.innerHTML = '隐藏天气预报';
+            }}
+            
+        obtn4.onclick = function () {
+            // 3.事件驱动程序
+            if (obtn4.innerHTML === '隐藏气温') {
+                newImg4.style.display = 'none';
+                obtn4.innerHTML = '显示气温';
+
+            } else {
+                newImg4.style.display = 'block';
+                obtn4.innerHTML = '隐藏气温';
+            }}
+            
+        obtn5.onclick = function () {
+            // 3.事件驱动程序
+            if (obtn5.innerHTML === '隐藏卫星云图') {
+                newImg5.style.display = 'none';
+                obtn5.innerHTML = '显示卫星云图';
+
+            } else {
+                newImg5.style.display = 'block';
+                obtn5.innerHTML = '隐藏卫星云图';
+            }}
+
+
+    </script>
+
+</body>
+
+</html>
