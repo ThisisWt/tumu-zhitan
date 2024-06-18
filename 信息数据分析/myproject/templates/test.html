@@ -25,26 +25,23 @@
 
         body {
             text-align: center;
-            background-image: url("{% static 'media/background.png' %}");
+            background-image: url("../MYApp/static/media/background.png");
             background-size: cover;
             /* 设置背景满铺 */
             background-attachment: fixed;
         }
-
     </style>
 </head>
 
 <body>
+    {#begin#}
+    <img src="../MYApp/static/media/同济大学背景题头.png" style="width: 100%; object-position: center;">
 
-    <img src="{% static 'media/同济大学背景题头.png' %}" style="width: 100%; object-position: center;">
-    
-<h1>信息数据分析</h1>
-    
     <div>
         <ul>
             <button id="show1"> 显示降水量</button>
             <div class="myimg" id="new1">
-                <img src="{% static 'media/降水量.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px" >
+                <img src="{% static 'media/降水量.jpg' %}" alt="downloaded_image.jpg" width="500px" height="500px">
             </div>
         </ul>
     </div>
@@ -52,6 +49,7 @@
         <div><a href="javascript:close();">隐藏降水量</a></div>
         <div id="imgbox"></div>
     </div>
+    {#end#}
 
     <div>
         <ul>
@@ -66,7 +64,7 @@
         <div id="imgbox"></div>
     </div>
 
-        <div>
+    <div>
         <ul>
             <button id="show3"> 显示天气预报</button>
             <div class="myimg" id="new3">
@@ -78,8 +76,8 @@
         <div><a href="javascript:close();">隐藏天气预报</a></div>
         <div id="imgbox"></div>
     </div>
-    
-        <div>
+
+    <div>
         <ul>
             <button id="show4"> 显示气温</button>
             <div class="myimg" id="new4">
@@ -91,8 +89,8 @@
         <div><a href="javascript:close();">隐藏气温</a></div>
         <div id="imgbox"></div>
     </div>
-    
-        <div>
+
+    <div>
         <ul>
             <button id="show5"> 显示卫星云图</button>
             <div class="myimg" id="new5">
@@ -104,7 +102,7 @@
         <div><a href="javascript:close();">隐藏卫星云图</a></div>
         <div id="imgbox"></div>
     </div>
-    
+
     <button type="submit" id="Download">下载图片</button>
 
     <script type="text/javascript">
@@ -121,16 +119,16 @@
 
         var obtn2 = document.getElementById('show2');
         var newImg2 = document.getElementById('new2');
-        
+
         var obtn3 = document.getElementById('show3');
         var newImg3 = document.getElementById('new3');
-        
+
         var obtn4 = document.getElementById('show4');
         var newImg4 = document.getElementById('new4');
-        
+
         var obtn5 = document.getElementById('show5');
         var newImg5 = document.getElementById('new5');
-        
+
         // window.onload = function(){
         //2.绑定事件
         obtn1.onclick = function () {
@@ -155,8 +153,9 @@
             } else {
                 newImg2.style.display = 'block';
                 obtn2.innerHTML = '隐藏土壤水分';
-            }}
-            
+            }
+        }
+
         obtn3.onclick = function () {
             // 3.事件驱动程序
             if (obtn3.innerHTML === '隐藏天气预报') {
@@ -166,8 +165,9 @@
             } else {
                 newImg3.style.display = 'block';
                 obtn3.innerHTML = '隐藏天气预报';
-            }}
-            
+            }
+        }
+
         obtn4.onclick = function () {
             // 3.事件驱动程序
             if (obtn4.innerHTML === '隐藏气温') {
@@ -177,8 +177,9 @@
             } else {
                 newImg4.style.display = 'block';
                 obtn4.innerHTML = '隐藏气温';
-            }}
-            
+            }
+        }
+
         obtn5.onclick = function () {
             // 3.事件驱动程序
             if (obtn5.innerHTML === '隐藏卫星云图') {
@@ -188,7 +189,8 @@
             } else {
                 newImg5.style.display = 'block';
                 obtn5.innerHTML = '隐藏卫星云图';
-            }}
+            }
+        }
 
 
     </script>
