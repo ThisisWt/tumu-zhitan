@@ -11,7 +11,7 @@
             font-size: 14px;
             line-height: 1.5;
             text-align: center;
-            background-image: url("../../土木智探前端/background.png");
+            background-image: url("/static/background.png");
             background-size: cover;
             background-attachment: fixed;
         }
@@ -92,7 +92,7 @@
         }
 
         // 预填充表单
-        window.onload = function() {
+        window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const name = urlParams.get('name');
             const student_id = urlParams.get('student_id');
