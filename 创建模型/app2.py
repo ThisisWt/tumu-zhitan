@@ -52,6 +52,5 @@ def run_exe():
         app.logger.error(f'程序运行失败: {str(e)}')
         return jsonify({'message': f'程序运行失败: {str(e)}'}), 500
 
-
 if __name__ == '__main__':
     app.run(debug=True)
