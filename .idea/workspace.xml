@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="016734b8-3986-41cb-a909-c9379bbd2c3b" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/创建模型/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/导入模型/uploads/pokoj_japonski.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/ProjectSettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/VSWorkspaceState.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/tumu-zhitan/FileContentIndex/860c4b52-fd65-4e5b-ae62-b1616c421fb6.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/tumu-zhitan/v17/.wsuo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/信息资源共享/已上传文件/2152338 姚俊 习概论文.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/查找导出模型/cache/b4a1370773918404c70f37f61664341847b97b00.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/导入模型/app4.py" beforeDir="false" afterPath="$PROJECT_DIR$/导入模型/app4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/导入模型/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/导入模型/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/导入模型/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/导入模型/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/导入模型/templates/view_model.html" beforeDir="false" afterPath="$PROJECT_DIR$/导入模型/templates/view_model.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/创建模型/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/创建模型/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/创建模型/Instant-NGP-for-RTX-3000-and-4000/imgui.ini" beforeDir="false" afterPath="$PROJECT_DIR$/创建模型/Instant-NGP-for-RTX-3000-and-4000/imgui.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/查找导出模型/app3.py" beforeDir="false" afterPath="$PROJECT_DIR$/查找导出模型/app3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/查找导出模型/static/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/查找导出模型/static/map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/查找导出模型/static/specific_building.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/查找导出模型/static/specific_building.geojson" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,18 +58,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.app4.executor": "Run",
-    "Python.创建模型.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/桌面/tumu-zhitan"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.app3.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app4.executor&quot;: &quot;Run&quot;,
+    &quot;Python.创建模型.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/桌面/tumu-zhitan&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
